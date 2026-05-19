@@ -1,14 +1,17 @@
 <div align="center">
 
-# 🛒 E-Commerce Product Manager
+# 🛒 NexusStore
 
-**A full-stack product management system built with Spring Boot & React.js**
+**Full-Stack E-Commerce Platform — Spring Boot × React.js**
 
 ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
 ![H2](https://img.shields.io/badge/H2_Database-0052CC?style=for-the-badge&logo=h2&logoColor=white)
 ![Maven](https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apache-maven&logoColor=white)
+
+A production-styled, dual-interface e-commerce application featuring a **Customer Storefront** and an **Admin Product Management Dashboard** — connected to a Spring Boot REST API backend.
 
 </div>
 
@@ -16,37 +19,55 @@
 
 ## 📌 Overview
 
-A production-ready REST API-driven application for managing e-commerce products with complete **CRUD** (Create, Read, Update, Delete) functionality. The backend is powered by **Spring Boot** with **Spring Data JPA** and an **H2 in-memory database**, while the frontend delivers an interactive experience through **React.js**.
+NexusStore is a full-stack e-commerce web application built with a layered backend architecture and a modern React frontend. It ships with two distinct interfaces:
+
+- **Customer Shop** — Browse, search, filter, and add products to a live shopping cart
+- **Admin Dashboard** — Full CRUD product management with Unsplash image integration, inventory stats, and category views
 
 ### Architecture
-
-```
-React Frontend  →  REST API Calls  →  Spring Boot Controller
-                                              ↓
-                                       Service Layer
-                                              ↓
-                                      Repository Layer
-                                              ↓
-                                        H2 Database
-```
+React Frontend (Customer Shop + Admin Dashboard)
+↓
+React Router
+↓
+REST API Calls
+↓
+Spring Boot Controller Layer
+↓
+Service Layer
+↓
+Repository Layer (JPA)
+↓
+H2 In-Memory DB
 
 ---
 
 ## ✨ Features
 
-### Backend
-- RESTful API architecture following REST conventions
-- Full CRUD operations for product management
-- Layered architecture (Controller → Service → Repository → Entity)
-- Spring Data JPA with H2 in-memory database
-- Clean, maintainable codebase with separation of concerns
+### 🛍️ Customer Storefront
+- Product grid with live search across name, brand, category, and description
+- Dynamic category filter bar built from live database data
+- In-stock / out-of-stock filtering
+- Add to cart with quantity control
+- Persistent cart (localStorage) with live item count badge
+- Slide-in cart sidebar with subtotal and checkout summary
+- Product detail modal with quantity selector
+- Toast notifications for cart actions
 
-### Frontend
-- Product dashboard with real-time data
-- Add, update, and delete products with instant feedback
-- Product listing with search and filtering
-- Seamless integration with Spring Boot REST APIs
-- Responsive UI that works across devices
+### 🛠️ Admin Dashboard
+- Full CRUD — Create, Read, Update, Delete products
+- Real-time inventory stats: total products, available, unavailable, inventory value, total stock, category count
+- Category breakdown view with per-category inventory value
+- Unsplash image picker integrated directly into product form
+- Search, category filter, and availability filter
+- Confirm-before-delete modal
+- Toast notification system
+
+### 🔧 Backend
+- RESTful API with Spring Boot and Spring MVC
+- Spring Data JPA with H2 in-memory database
+- Auto-populated seed data (50+ products across 15 categories)
+- Layered architecture: Controller → Service → Repository → Entity
+- CORS configured for local frontend development
 
 ---
 
@@ -54,55 +75,63 @@ React Frontend  →  REST API Calls  →  Spring Boot Controller
 
 | Layer | Technology |
 |-------|-----------|
-| **Language** | Java |
+| **Language** | Java 17 |
 | **Framework** | Spring Boot, Spring MVC |
 | **Persistence** | Spring Data JPA, H2 Database |
 | **Build Tool** | Maven |
-| **Frontend** | React.js, JavaScript, CSS |
+| **Frontend** | React.js, JavaScript (ES6+) |
+| **Routing** | React Router v6 |
+| **Styling** | CSS (custom design system — DM Sans, IBM Plex Mono, Instrument Serif) |
 | **HTTP Client** | Fetch API |
+| **Image API** | Unsplash API |
 | **Version Control** | Git & GitHub |
 
 ---
 
 ## 📁 Project Structure
 
-```
-E-CommerceProject/
+```text
+NexusStore/
 ├── Backend/
-│   └── E-commerceSpringMVC/        # Spring Boot application
-│       ├── src/main/java/
-│       │   ├── controller/         # REST controllers
-│       │   ├── service/            # Business logic
-│       │   ├── repository/         # Data access layer
-│       │   └── entity/             # JPA entities
+│   └── E-commerceSpringMVC/
+│       ├── controller/        (REST endpoints)
+│       ├── service/           (Business logic)
+│       ├── repository/        (JPA data access)
+│       ├── model/             (Product entity)
+│       ├── resources/
+│       │   ├── application.properties
+│       │   └── data.sql
 │       └── pom.xml
 │
 └── Frontend/
-    └── ecommerce-ui/               # React application
-        ├── src/
-│       │   ├── components/         # UI components
-│       │   └── App.js
-        └── package.json
+    └── ecommerce-ui/
+        └── src/
+            ├── App.js             (Admin dashboard)
+            ├── App.css
+            ├── CustomerShop.js    (Customer storefront)
+            ├── CustomerShop.css
+            ├── MainApp.js         (Router)
+            └── index.js
 ```
-
 ---
 
 ## 📡 API Endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `GET` | `/api/home` | Welcome / health check |
-| `GET` | `/api/products` | Retrieve all products |
-| `GET` | `/api/products/{id}` | Retrieve product by ID |
+| `GET` | `/api/home` | Health check / welcome message |
+| `GET` | `/api/products` | Fetch all products |
+| `GET` | `/api/products/{id}` | Fetch product by ID |
 | `POST` | `/api/product` | Create a new product |
 | `PUT` | `/api/product` | Update an existing product |
-| `DELETE` | `/api/products/{id}` | Delete a product by ID |
+| `DELETE` | `/api/products/{id}` | Delete a product |
 
 ---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Java 17+
 - Node.js 18+
 - Maven 3.8+
@@ -110,39 +139,47 @@ E-CommerceProject/
 ### Backend Setup
 
 ```bash
-# Navigate to backend directory
 cd Backend/E-commerceSpringMVC
-
-# Build and run the Spring Boot application
 mvn spring-boot:run
 ```
 
-> Backend runs at: **http://localhost:8080**
+> API available at: **http://localhost:8080**  
+> H2 Console (optional): **http://localhost:8080/h2-console**
 
 ### Frontend Setup
 
 ```bash
-# Navigate to frontend directory
 cd Frontend/ecommerce-ui
-
-# Install dependencies
 npm install
-
-# Start the development server
 npm start
 ```
 
-> Frontend runs at: **http://localhost:3000**
+> App available at: **http://localhost:3000**
+
+| Route | Interface |
+|-------|-----------|
+| `/shop` | Customer Storefront |
+| `/admin` | Admin Dashboard |
+
+---
+
+## 🗂️ Product Categories
+
+The seed database includes 50+ products across 15 categories:
+
+`Electronics` `Clothing` `Food` `Books` `Sports` `Beauty` `Home` `Toys` `Furniture` `Automotive` `Stationery` `Pets` `Travel` `Gaming` `Other`
 
 ---
 
 ## 🔮 Future Enhancements
 
-- [ ] Authentication & Authorization with JWT Security
-- [ ] MySQL / PostgreSQL integration for production databases
-- [ ] Product image upload support
-- [ ] Product categorization and tagging
-- [ ] Pagination and advanced filtering
+- [ ] JWT Authentication & Role-based Authorization (Admin vs Customer)
+- [ ] MySQL / PostgreSQL for production-grade persistence
+- [ ] Product image upload (Multipart / S3)
+- [ ] Order management and order history
+- [ ] Payment gateway integration (Razorpay / Stripe)
+- [ ] Pagination and infinite scroll
+- [ ] Wishlist functionality
 - [ ] Docker & deployment support (AWS / Railway / Render)
 
 ---
@@ -157,6 +194,6 @@ npm start
 
 <div align="center">
 
-⭐ If you found this project helpful, please consider giving it a star!
+⭐ If you found this project helpful, please give it a star!
 
 </div>
